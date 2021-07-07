@@ -7,6 +7,7 @@ import model.factory.FactoryMoney;
 import model.factory.first.EggPowder;
 import model.factory.first.MilkSeprator;
 import model.factory.first.Spinnery;
+import model.factory.seccond.Chickenerry;
 import model.factory.seccond.CookieBakery;
 import model.factory.seccond.IceCreamFactory;
 import model.factory.seccond.Weaving;
@@ -108,6 +109,11 @@ public class InputProcessor {
             case "WEAVING":
                 if (this.situationOfOpeningWorkShop(mainController.factories.weavingFactories,FactoryMoney.WEAVING)==1) {
                     mainController.factories.weavingFactories = new Weaving(7, 5);
+                    return true;
+                }
+            case "CHICKENERRY":
+                if (this.situationOfOpeningWorkShop(mainController.factories.chickenerryFactory,FactoryMoney.CHICKENERRY)==1) {
+                    mainController.factories.chickenerryFactory = new Chickenerry(7, 7);
                     return true;
                 }
                 return false;
@@ -234,6 +240,7 @@ public class InputProcessor {
         }
         return false;
     }
+
     public boolean work(String workShopName){
         switch (workShopName.toUpperCase()){
             case "EGGPOWDER": return workSituation(mainController.factories.eggPowderFactories);
@@ -242,11 +249,13 @@ public class InputProcessor {
             case "ICECRAEMFACTORY":return workSituation(mainController.factories.iceCreamFactories);
             case "SPINNERY":return workSituation(mainController.factories.spinneryFactories);
             case "WEAVING":return workSituation(mainController.factories.weavingFactories);
+            case "CHICKENNERY":return workSituation(mainController.factories.chickenerryFactory);
         }
         this.mainController.logger.commands.add("ERROR,"+this.mainController.logger.lastChange.toString()+",THERE IS NO WORKSHOP WITH NAME "+workShopName);
         System.err.println("THERE IS NO WORKSHOP WITH NAME "+workShopName);
         return false;
     }
+
     public boolean upgraid(String workShopName){
         switch (workShopName.toUpperCase()){
             case "EGGPOWDER": return upgraidSituation(mainController.factories.eggPowderFactories);
@@ -255,11 +264,13 @@ public class InputProcessor {
             case "ICECRAEMFACTORY":return upgraidSituation(mainController.factories.iceCreamFactories);
             case "SPINNERY":return upgraidSituation(mainController.factories.spinneryFactories);
             case "WEAVING":return upgraidSituation(mainController.factories.weavingFactories);
+            case "CHICKENNERY":return upgraidSituation(mainController.factories.chickenerryFactory);
         }
         this.mainController.logger.commands.add("ERROR,"+this.mainController.logger.lastChange.toString()+",THERE IS NO WORKSHOP WITH NAME "+workShopName);
         System.err.println("THERE IS NO WORKSHOP WITH NAME "+workShopName);
         return false;
     }
+
     public boolean upgraidSituation(Factory factory){
         if (factory == null) {
             System.err.println( "factory is not build yet");

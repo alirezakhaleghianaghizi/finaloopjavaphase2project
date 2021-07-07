@@ -5,6 +5,7 @@ import model.factory.FactoryMoney;
 import model.factory.first.EggPowder;
 import model.factory.first.MilkSeprator;
 import model.factory.first.Spinnery;
+import model.factory.seccond.Chickenerry;
 import model.factory.seccond.CookieBakery;
 import model.factory.seccond.IceCreamFactory;
 import model.factory.seccond.Weaving;
@@ -20,6 +21,7 @@ public class ControllerFactory {
     public  CookieBakery cookieBakeryFactories;
     public IceCreamFactory iceCreamFactories;
     public  Weaving weavingFactories;
+    public Chickenerry chickenerryFactory;
 
     public ControllerFactory() { }
 
@@ -32,6 +34,7 @@ public class ControllerFactory {
         if (factory.name.equalsIgnoreCase(FactoryMoney.MILKSEPERATOR.toString())) return workMilkSeprator( (MilkSeprator) factory,gadget);
         if (factory.name.equalsIgnoreCase(FactoryMoney.ICECREAMFACTORY.toString())) return workIceCreamFactory((IceCreamFactory) factory,gadget);
         if (factory.name.equalsIgnoreCase(FactoryMoney.WEAVING.toString())) return workWeaving( (Weaving) factory,gadget);
+        if (factory.name.equalsIgnoreCase(FactoryMoney.CHICKENERRY.toString())) return workChickennery( (Chickenerry) factory,gadget);
         return 0;
     }
     
@@ -209,6 +212,41 @@ public class ControllerFactory {
             if(weaving.work(a)) {
                 for (int i = 0; i < index.size(); i++) gadget.warehouse.existence.remove(index.get(i));
                 for (int i = 0; i < indexOfGood.size(); i++) gadget.warehouse.silkInWareHouse.remove(indexOfGood.get(i));
+                return 1;
+            }
+            return -1;
+        }
+    }
+    public int workChickennery(Chickenerry chickenerry, ControllerGadget gadget) {
+        if (chickenerry.level == 1) {
+            for (Goods goods1 : gadget.warehouse.existence) {
+                if (goods1.name.equals(GoodsEnum.EGG.name())) {
+                    if(chickenerry.work(1)){
+                        gadget.warehouse.existence.remove(goods1);
+                        gadget.warehouse.eggInWareHouse.remove(goods1);
+                        return 1;
+                    }
+                    return -1;
+                }
+            }
+            return 0;
+        }else {
+            int a = 0;
+            ArrayList<Integer>index=new ArrayList<>();
+            ArrayList<Integer>indexOfGood=new ArrayList<>();
+            while (a <= 2) {
+                for (Goods g : gadget.warehouse.existence) {
+                    if (g.name.equals(GoodsEnum.EGG.name())) {
+                        a++;
+                        index.add(gadget.warehouse.existence.indexOf(g));
+                        indexOfGood.add(gadget.warehouse.eggInWareHouse.indexOf(g));
+                    }
+                }
+            }
+          if(a==0) return 0;
+            if(chickenerry.work(a)) {
+                for (int i = 0; i < index.size(); i++) gadget.warehouse.existence.remove(index.get(i));
+                for (int i = 0; i < indexOfGood.size(); i++) gadget.warehouse.eggInWareHouse.remove(indexOfGood.get(i));
                 return 1;
             }
             return -1;

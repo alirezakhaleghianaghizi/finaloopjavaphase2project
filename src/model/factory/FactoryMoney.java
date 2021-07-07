@@ -6,6 +6,7 @@ public enum FactoryMoney {
     SPINNERY(400),
     COOKIEBAKERY(250),
     ICECREAMFACTORY(400),
+    CHICKENERRY(400),
     WEAVING(550);
     int money;
 
